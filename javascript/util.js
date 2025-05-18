@@ -36,8 +36,6 @@ export async function animateVisitedNodes(nodes, originTileId, destinationTileId
   }
 }
 
-
-
 export async function animatePath(path, originTileId, destinationTileId) {
   for (let i = 0; i < path.length; i++) {
     const node = path[i];
@@ -52,16 +50,6 @@ export async function animatePath(path, originTileId, destinationTileId) {
   }
 }
 
-
-// Clear Board
-export function clearBoard() {
-  document.querySelectorAll(".tile.wall").forEach(tile => {
-    tile.classList.remove("wall");
-  });
-  document.querySelectorAll(".tile.visited, .tile.path").forEach(tile => {
-    tile.classList.remove("visited", "path");
-  });
-}
 
 export function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

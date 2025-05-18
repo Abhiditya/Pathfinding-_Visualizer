@@ -133,7 +133,8 @@ function renderIcons() {
 function moveIconToTile(iconType, tile) {
     if (tile.id === originTileId || tile.id === destinationTileId) return;
     if (tile.classList.contains("wall")) tile.classList.remove("wall");
-
+    if (tile.classList.contains('visited')) tile.classList.remove('visited');
+    if (tile.classList.contains('path')) tile.classList.remove('path');
     if (iconType === "origin") originTileId = tile.id;
     else destinationTileId = tile.id;
 
@@ -142,8 +143,10 @@ function moveIconToTile(iconType, tile) {
 
 // Wall toggle
 function handleWallToggle(tile) {
-    if (tile.id === originTileId || tile.id === destinationTileId) return;
-    tile.classList.toggle("wall");
+  if (tile.id === originTileId || tile.id === destinationTileId) return;
+  if (tile.classList.contains('visited')) tile.classList.remove('visited');
+  if (tile.classList.contains('path')) tile.classList.remove('path');
+  tile.classList.toggle("wall");
 }
 
 // Global mouse/touch state
