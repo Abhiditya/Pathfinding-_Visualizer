@@ -160,31 +160,7 @@ document.addEventListener("touchend", () => {
 });
 
 // Init and resize
-function setupSmartResize(minTileSize = 30) {
-  let lastCols = 0;
-  let lastRows = 0;
-
-  function safeResize() {
-    const usableWidth = window.innerWidth * 0.8;
-    const usableHeight = window.innerHeight * 0.8;
-
-    const cols = Math.floor(usableWidth / minTileSize);
-    const rows = Math.floor(usableHeight / minTileSize);
-
-    if (cols !== lastCols || rows !== lastRows) {
-      lastCols = cols;
-      lastRows = rows;
-      displayBoard();
-    }
-  }
-
-  window.addEventListener("resize", () => { setTimeout(safeResize, 100); });
-}
-window.addEventListener("DOMContentLoaded", () => {
-  displayBoard();
-  setupSmartResize();
-});
-
+window.addEventListener("DOMContentLoaded", displayBoard);
 
 // Pattern selection
 document.getElementById("patterns").addEventListener("change", (e) => {
