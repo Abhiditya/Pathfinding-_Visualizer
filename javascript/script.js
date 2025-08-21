@@ -103,12 +103,23 @@ function displayBoard() {
   }
 
   // origin & destination icon placement
-  const middleRow = Math.floor(rows / 2);
-  const originCol = Math.floor(cols / 6);
-  const destinationCol = Math.floor(cols * 5 / 6);
+    // Divide grid into quadrants
+  const upperLeftRowLimit = Math.floor(rows / 2.5);
+  const upperLeftColLimit = Math.floor(cols / 2.5);
 
-  originTileId = `tile-${middleRow * cols + originCol}`;
-  destinationTileId = `tile-${middleRow * cols + destinationCol}`;
+  const lowerRightRowStart = Math.floor(rows * 0.6);
+  const lowerRightColStart = Math.floor(cols * 0.6);
+
+  // Random origin in upper-left quadrant
+  const originRow = Math.floor(Math.random() * upperLeftRowLimit);
+  const originCol = Math.floor(Math.random() * upperLeftColLimit);
+
+  // Random destination in lower-right quadrant
+  const destinationRow = Math.floor(Math.random() * (rows - lowerRightRowStart)) + lowerRightRowStart;
+  const destinationCol = Math.floor(Math.random() * (cols - lowerRightColStart)) + lowerRightColStart;
+
+  originTileId = `tile-${originRow * cols + originCol}`;
+  destinationTileId = `tile-${destinationRow * cols + destinationCol}`;
 
   renderIcons();
 }
@@ -122,11 +133,11 @@ function renderIcons() {
 
     const originTile = document.getElementById(originTileId);
     originTile.classList.add("origin");
-    originTile.innerHTML = '<i class="fa-sharp fa-solid fa-person-running icon origin-icon bounce"></i>';
+    originTile.innerHTML = '<i class="fa-solid fa-rocket icon origin-icon bounce"></i>';
 
     const destinationTile = document.getElementById(destinationTileId);
     destinationTile.classList.add("destination");
-    destinationTile.innerHTML = '<i class="fa-sharp fa-solid fa-flag icon destination-icon bounce"></i>';
+    destinationTile.innerHTML = '<i class="fa-solid fa-bullseye icon destination-icon bounce"></i>';
 }
 
 // Move icons
@@ -172,8 +183,12 @@ document.getElementById("patterns").addEventListener("change", (e) => {
   const grid = Array.from({ length: rows }, (_, row) =>
       Array.from({ length: cols }, (_, col) => tiles[row * cols + col])
   );
-
-  displayBoard();
+  // Clear previous walls before drawing new pattern
+  for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+          grid[r][c].classList.remove("wall");
+      }
+  }
 
   switch (patternValue) {
     case "1":

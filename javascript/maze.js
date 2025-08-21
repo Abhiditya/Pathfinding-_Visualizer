@@ -10,32 +10,58 @@ export function generateBasicRandomMaze(grid, rows, cols, originTileId, destinat
 }
 
 export function generateSimpleStairsPattern(grid, rows, cols, originTileId, destinationTileId) {
-    let r1 = 1, c1 = 1;
-    let lastTile = null;
-
-    while (r1 < rows && c1 < cols) {
-        const tile = grid[r1][c1]; 
-        if (!isSpecialTile(tile, originTileId, destinationTileId)) {
-            tile.classList.add("wall");
-            lastTile = tile;
-        }
-        r1++;
-        c1++;
+    function isSpecial(tile) {
+        return isSpecialTile(tile, originTileId, destinationTileId);
     }
 
-    let r2 = rows - 1, c2 = c1;
-    while (r2 >= 0 && c2 < cols) {
-        const tile = grid[r2][c2]; 
-        if (!isSpecialTile(tile, originTileId, destinationTileId)) {
-            tile.classList.add("wall");
-            lastTile = tile;
+    const stairHeight = 3;  // How many vertical blocks per stair step
+    const stairWidth = 3;   // How many horizontal blocks per stair step
+    const gapChance = 0.05; // Small chance for random gaps
+
+    let r = 1;
+    let c = 0;
+
+    // Build main staircase ↘️
+    while (r < rows && c < cols) {
+        // Horizontal part of stair
+        for (let j = 0; j < stairWidth && r < rows && c < cols; j++) {
+            const tile = grid[r][c];
+            if (!isSpecial(tile) && Math.random() > gapChance) {
+                tile.classList.add("wall");
+            }
+            c++;
         }
-        r2--;
-        c2++;
+        // Vertical part of stair
+        for (let i = 0; i < stairHeight && r < rows && c < cols; i++) {
+            const tile = grid[r][c];
+            if (!isSpecial(tile) && Math.random() > gapChance) {
+                tile.classList.add("wall");
+            }
+            r++;
+        }
     }
 
-    if (lastTile) lastTile.classList.remove("wall");
+    // Add a mirrored staircase from top-right ↙️ for symmetry
+    r = 1;
+    c = cols - 2;
+    while (r < rows && c >= 0) {
+        for (let j = 0; j < stairWidth && r < rows && c >= 0; j++) {
+            const tile = grid[r][c];
+            if (!isSpecial(tile) && Math.random() > gapChance) {
+                tile.classList.add("wall");
+            }
+            c--;
+        }
+        for (let i = 0; i < stairHeight && r < rows && c >= 0; i++) {
+            const tile = grid[r][c];
+            if (!isSpecial(tile) && Math.random() > gapChance) {
+                tile.classList.add("wall");
+            }
+            r++;
+        }
+    }
 }
+
 
 export function generateRecursiveDivisionHorizontal(grid, startRow = 0, endRow = grid.length - 1, startCol = 0, endCol = grid[0].length - 1, originTileId, destinationTileId) {
     if (endRow <= startRow) return;

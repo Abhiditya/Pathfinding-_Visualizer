@@ -1,27 +1,27 @@
 :root {
-  --bg-color: #0c1b3a;
-  --navbar-bg: #132f5c;
-  --tile-border-color: #1e3a70;
+  --bg-color: #0d1b2a;
+  --navbar-bg: rgba(19, 47, 92, 0.55);
+  --tile-border-color: #1b2d4f;
 
-  --text-color: #e5ecf5;
-  --primary: #80d0ff;
-  --hover-color: #4fa1d9;
-  --highlight-accent: #b24444;
+  --text-color: #e6f1ff;
+  --primary: #00eaff;
+  --hover-color: #00b8d9;
+  --highlight-accent: #ff4d6d;
 
   --unvisited-color: #95d0e2;
   --visited-color: #45a2e8;
   --wall-color: #316d95;
-  --path-color: #faaa15a4;
+  --path-color: #fcbf31;
 
   --origin-color: #003c58;
   --destination-color: #840707;
 
-  --button-green: #44cccc;
-  --button-hover: var(--highlight-accent);
-  --control-bg: #183a66;
-  --text-light: #e5ecf5;
-  --disabled-bg: #e0e0e0;
-  --disabled-text: #999;
+  --button-green: #06d6a0;
+  --button-hover: #ff4d6d;
+  --control-bg: #1b2b44;
+  --text-light: #f5f7fa;
+  --disabled-bg: #c8c8c8;
+  --disabled-text: #888;
 }
 
 * {
@@ -68,6 +68,7 @@ body {
   font-size: 1em;
   background-color: var(--navbar-bg);
   border-bottom: 2px solid var(--visited-color);
+  backdrop-filter: blur(8px);
 }
 
 .navbar select,
@@ -155,7 +156,6 @@ body {
 
 .tile {
   background-color: var(--unvisited-color);
-  border: 1px solid var(--tile-border-color);
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -247,9 +247,6 @@ body {
 }
 .origin-icon { color: var(--origin-color); }
 .destination-icon { color: var(--destination-color); }
-
-.origin { background-color: var(--button-green); }
-.destination { background-color: var(--highlight-accent); }
 
 
 .bounce {
